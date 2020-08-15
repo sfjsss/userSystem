@@ -9,7 +9,10 @@ public enum ResultCode implements Serializable {
     REGISTERED_SUCCESS(20023, "registered success"),
     PERMISSION_SIGNATURE_ERROR(70007, "signiture failed"),
     PERMISSION_TOKEN_EXPIRED(70004, "token expired"),
-    PERMISSION_TOKEN_INVALID(70006, "invalid token");
+    PERMISSION_TOKEN_INVALID(70006, "invalid token"),
+    USER_UN_VERIFIED(-2008, "non-existing user or unverified user"),
+    WRONG_PASSWORD(-2009, "invalid credentials"),
+    SUCCESS(0, "success");
 
     int code;
 

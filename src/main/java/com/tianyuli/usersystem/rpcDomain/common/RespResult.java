@@ -19,4 +19,17 @@ public class RespResult<T> implements Serializable {
         this.code = resultCode.getCode();
         this.message = resultCode.getMessage();
     }
+
+    public RespResult(ResultCode resultCode, T data) {
+        this(resultCode);
+        this.data = data;
+    }
+
+    public RespResult(String message) {
+        this.message = message;
+    }
+
+    public static <T> RespResult SUCCESS(T data) {
+        return new RespResult(ResultCode.SUCCESS, data);
+    }
 }
