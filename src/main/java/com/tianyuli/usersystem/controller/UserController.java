@@ -3,6 +3,7 @@ package com.tianyuli.usersystem.controller;
 import com.tianyuli.usersystem.pojo.User;
 import com.tianyuli.usersystem.rpcDomain.common.RespResult;
 import com.tianyuli.usersystem.rpcDomain.common.ResultCode;
+import com.tianyuli.usersystem.rpcDomain.common.token.JwtIgnore;
 import com.tianyuli.usersystem.rpcDomain.common.utils.JwtTokenUtil;
 import com.tianyuli.usersystem.rpcDomain.req.LoginRequest;
 import com.tianyuli.usersystem.rpcDomain.req.RegisterRequest;
@@ -29,6 +30,7 @@ public class UserController {
 
     @RequestMapping(value = "get/Captcha", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
+    @JwtIgnore
     public RespResult getCaptcha(@RequestBody RegisterRequest registerRequest) {
 //        return userService.beforeRegister(registerRequest);
         return null;
@@ -37,6 +39,7 @@ public class UserController {
 
     @PostMapping(value = "register", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
+    @JwtIgnore
     public RespResult register(@RequestBody RegisterRequest registerRequest) {
         try {
             if (!userService.checkCaptcha(registerRequest)) {
@@ -50,6 +53,7 @@ public class UserController {
 
     @PostMapping(value = "login", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
+    @JwtIgnore
     public RespResult login(HttpServletResponse response, @RequestBody LoginRequest loginRequest) {
         User user = userService.getUserByUsername(loginRequest.getUsername());
         if (!userService.checkVerified(user)) {
