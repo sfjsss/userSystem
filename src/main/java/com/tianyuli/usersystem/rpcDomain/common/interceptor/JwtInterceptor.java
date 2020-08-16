@@ -1,7 +1,7 @@
 package com.tianyuli.usersystem.rpcDomain.common.interceptor;
 
 import com.tianyuli.usersystem.rpcDomain.common.ResultCode;
-import com.tianyuli.usersystem.rpcDomain.common.exception.CustomException;
+import com.tianyuli.usersystem.rpcDomain.common.exception.ValidateException;
 import com.tianyuli.usersystem.rpcDomain.common.token.JwtIgnore;
 import com.tianyuli.usersystem.rpcDomain.common.utils.JwtTokenUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -32,7 +32,7 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
         if (StringUtils.isBlank(authHeader) || authHeader.startsWith(JwtTokenUtil.TOKEN_PREFIX)) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             logger.info("user is not logged in");
-            throw new CustomException(ResultCode.USER_NOT_LOGGED_IN);
+            throw new ValidateException(ResultCode.USER_NOT_LOGGED_IN);
         }
         String token = authHeader.substring(7);
         if (JwtTokenUtil.isExpiration(token)) {

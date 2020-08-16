@@ -14,7 +14,8 @@ public enum ResultCode implements Serializable {
     WRONG_PASSWORD(-2009, "invalid credentials"),
     SUCCESS(0, "success"),
     USER_NOT_LOGGED_IN(20001, "user is not logged in"),
-    SERVER_ERROR(-2011, "server error");
+    SERVER_ERROR(-2011, "server error"),
+    REG_DATA_IS_WRONG(-2001, "registration arg is wrong");
 
     int code;
 

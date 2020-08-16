@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserService extends BaseService<User, String> {
 
-    Object beforeRegister(RegisterRequest registerRequest);
+    RespResult beforeRegister(RegisterRequest registerRequest);
 
     boolean checkCaptcha(RegisterRequest registerRequest) throws NullPointerException;
 
