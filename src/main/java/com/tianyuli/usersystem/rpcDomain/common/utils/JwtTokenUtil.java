@@ -1,7 +1,7 @@
 package com.tianyuli.usersystem.rpcDomain.common.utils;
 
 import com.tianyuli.usersystem.rpcDomain.common.ResultCode;
-import com.tianyuli.usersystem.rpcDomain.common.exception.CustomException;
+import com.tianyuli.usersystem.rpcDomain.common.exception.ValidateException;
 import com.tianyuli.usersystem.rpcDomain.common.token.Audience;
 import io.jsonwebtoken.*;
 import org.apache.commons.lang3.StringUtils;
@@ -67,7 +67,7 @@ public final class JwtTokenUtil {
             return builder.compact();
         } catch (Exception e) {
             log.error("签名失败", e);
-            throw new CustomException(ResultCode.PERMISSION_SIGNATURE_ERROR);
+            throw new ValidateException(ResultCode.PERMISSION_SIGNATURE_ERROR);
         }
     }
 
@@ -90,7 +90,7 @@ public final class JwtTokenUtil {
                 }
             }
 
-            throw new CustomException(ResultCode.PERMISSION_TOKEN_EXPIRED);
+            throw new ValidateException(ResultCode.PERMISSION_TOKEN_EXPIRED);
         } catch (Exception e) {
             for (HttpServletResponse response : responses) {
                 if (response != null){
@@ -98,7 +98,7 @@ public final class JwtTokenUtil {
                 }
             }
             log.error("===== Token解析异常 =====", e.getMessage());
-            throw new CustomException(ResultCode.PERMISSION_TOKEN_INVALID);
+            throw new ValidateException(ResultCode.PERMISSION_TOKEN_INVALID);
         }
     }
 

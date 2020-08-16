@@ -32,8 +32,7 @@ public class UserController {
     @ResponseBody
     @JwtIgnore
     public RespResult getCaptcha(@RequestBody RegisterRequest registerRequest) {
-//        return userService.beforeRegister(registerRequest);
-        return null;
+        return userService.beforeRegister(registerRequest);
     }
 
 

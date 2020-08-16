@@ -20,9 +20,9 @@ public class GlobalExceptionHandle {
     public RespResult handleException(Exception e, HttpServletResponse response) {
         e.printStackTrace();
         logger.info(e.getMessage());
-        if (e instanceof CustomException) {
+        if (e instanceof ValidateException) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            return new RespResult(((CustomException) e).resultCode);
+            return new RespResult(((ValidateException) e).resultCode);
         }
 
         return new RespResult(ResultCode.SERVER_ERROR);

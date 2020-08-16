@@ -4,6 +4,8 @@ import com.tianyuli.usersystem.dao.UserDao;
 import com.tianyuli.usersystem.pojo.*;
 import com.tianyuli.usersystem.rpcDomain.common.RespResult;
 import com.tianyuli.usersystem.rpcDomain.common.ResultCode;
+import com.tianyuli.usersystem.rpcDomain.common.component.validate.ReqValidateManager;
+import com.tianyuli.usersystem.rpcDomain.common.exception.ValidateException;
 import com.tianyuli.usersystem.rpcDomain.common.utils.MD5Utils;
 import com.tianyuli.usersystem.rpcDomain.req.LoginRequest;
 import com.tianyuli.usersystem.rpcDomain.req.RegisterRequest;
@@ -33,9 +35,25 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements Us
     @Autowired
     private UserTagService userTagService;
 
-    @Override
-    public Object beforeRegister(RegisterRequest registerRequest) {
+    @Autowired
+    private ReqValidateManager reqValidateManager;
 
+    @Autowired
+    private ToolService toolService;
+
+    @Override
+    public RespResult beforeRegister(RegisterRequest registerRequest) {
+        try {
+            reqValidateManager.doExecute(registerRequest);
+        } catch (ValidateException e) {
+            return new RespResult(e.getResultCode());
+        }
+        boolean isSend = toolService.sendRegisterMail(registerRequest);
+        if (isSend) {
+
+        } else {
+
+        }
         return null;
     }
 
