@@ -6,6 +6,8 @@ import com.tianyuli.usersystem.rpcDomain.common.RespResult;
 import com.tianyuli.usersystem.rpcDomain.common.ResultCode;
 import com.tianyuli.usersystem.rpcDomain.common.component.validate.ReqValidateManager;
 import com.tianyuli.usersystem.rpcDomain.common.exception.ValidateException;
+import com.tianyuli.usersystem.rpcDomain.common.strategy.ContextMapper;
+import com.tianyuli.usersystem.rpcDomain.common.strategy.OperatorStrategyEnum;
 import com.tianyuli.usersystem.rpcDomain.common.utils.MD5Utils;
 import com.tianyuli.usersystem.rpcDomain.req.LoginRequest;
 import com.tianyuli.usersystem.rpcDomain.req.RegisterRequest;
@@ -41,6 +43,9 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements Us
     @Autowired
     private ToolService toolService;
 
+    @Autowired
+    private ContextMapper contextMapper;
+
     @Override
     public RespResult beforeRegister(RegisterRequest registerRequest) {
         try {
@@ -49,12 +54,8 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements Us
             return new RespResult(e.getResultCode());
         }
         boolean isSend = toolService.sendRegisterMail(registerRequest);
-        if (isSend) {
-
-        } else {
-
-        }
-        return null;
+        OperatorStrategyEnum operatorStrategyEnum = isSend ? OperatorStrategyEnum.SUCCESS : OperatorStrategyEnum.FAIL;
+        return contextMapper.loadProcessor(operatorStrategyEnum).doProcessor(registerRequest, operatorStrategyEnum);
     }
 
     @Override
@@ -66,7 +67,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements Us
     @Override
     public RespResult registerUser(RegisterRequest registerRequest) {
         User user = userDao.getByUsername(registerRequest.getUsername());
-        user.setVerified(true);
+        user.setIsVerified(true);
         userDao.save(user);
         initUserInfo(user);
         return new RespResult(ResultCode.REGISTERED_SUCCESS);

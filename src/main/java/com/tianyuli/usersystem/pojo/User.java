@@ -10,21 +10,30 @@ import java.io.Serializable;
 @Table(name = "user")
 public class User implements Serializable {
 
-    private static final long serialVersionUID = 871002067626741118L;
+    private static final long serialVersionUID = -4537601996396295771L;
 
     @Id
-    @Column
+    @Column(name = "id", nullable = false, length = 48)
     private String id;
-    @Column
+
+    @Column(name = "username", nullable = false, length = 16)
     private String username;
-    @Column
+
+    @Column(name = "password", nullable = false, length = 64)
     private String password;
-    @Column
+
+    @Column(name = "is_verified",length = 4)
     private Boolean isVerified;
-    @Column
+
+    @Column(name = "email", length = 32)
+    private String email;
+
+    @Column(name = "phone_number",length = 32)
     private String phoneNumber;
-    @Column
+
+    @Column(name = "area_number",length = 16)
     private String areaNumber;
+
 
     public String getId() {
         return id;
@@ -38,24 +47,32 @@ public class User implements Serializable {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(String userName) {
+        this.username = userName;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String passWord) {
+        this.password = passWord;
     }
 
     public Boolean getVerified() {
         return isVerified;
     }
 
-    public void setVerified(Boolean verified) {
-        isVerified = verified;
+    public void setIsVerified(Boolean isVerified) {
+        this.isVerified = isVerified;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPhoneNumber() {

@@ -11,18 +11,22 @@ import java.util.Date;
 @Table(name = "register_record")
 public class RegisterRecord implements Serializable {
 
-    private static final long serialVersionUID = -915709259241887598L;
+    private static final long serialVersionUID = -4928118636119976369L;
 
     @Id
-    @Column
+    @Column(name = "id", length = 64)
     private String id;
-    @Column
+
+    @Column(name = "username", length = 16)
     private String username;
-    @Column
+
+    @Column(name = "email", length = 64)
     private String email;
-    @Column
+
+    @Column(name = "captcha", length = 16)
     private String captcha;
-    @Column
+
+    @Column(name = "send_time")
     private Date sendTime;
 
     public String getId() {
@@ -31,14 +35,6 @@ public class RegisterRecord implements Serializable {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String userId) {
-        this.username = userId;
     }
 
     public String getEmail() {
@@ -63,5 +59,13 @@ public class RegisterRecord implements Serializable {
 
     public void setSendTime(Date sendTime) {
         this.sendTime = sendTime;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
