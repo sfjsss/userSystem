@@ -35,9 +35,6 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements Us
     private UserProfileService userProfileService;
 
     @Autowired
-    private UserTagService userTagService;
-
-    @Autowired
     private ReqValidateManager reqValidateManager;
 
     @Autowired
@@ -94,16 +91,12 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements Us
         userPreference.setSysMessageNotice("1");
         userPreference.setTodoNotice("1");
 
-        UserTag userTag = new UserTag();
-        userTag.setUserId(userId);
-
         UserProfile userProfile = new UserProfile();
         userProfile.setUserId(userId);
 
         userPreferenceService.save(userPreference);
         addressService.save(address);
         userProfileService.save(userProfile);
-        userTagService.save(userTag);
     }
 
     @Override
