@@ -15,13 +15,13 @@ public class UserPreference implements Serializable {
     @Column(name = "user_id", nullable = false, length = 48)
     private String userId;
 
-    @Column(name = "todo_notice", length = 1)
+    @Column(name = "todo_notice", length = 1, nullable = false)
     private String todoNotice;
 
-    @Column(name = "sys_message_notice", length = 1)
+    @Column(name = "sys_message_notice", length = 1, nullable = false)
     private String sysMessageNotice;
 
-    @Column(name = "other_user_message_notice", length = 1)
+    @Column(name = "other_user_message_notice", length = 1, nullable = false)
     private String otherUserMessageNotice;
 
     public String getUserId() {
