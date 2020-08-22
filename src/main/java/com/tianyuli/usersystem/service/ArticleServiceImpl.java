@@ -12,10 +12,14 @@ import com.tianyuli.usersystem.rpcDomain.resp.ArticleResp;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,6 +71,15 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article, String> impleme
         articleTagDao.deleteAllByArticleId(id);
 
         return new RespResult(ResultCode.SUCCESS);
+    }
+
+    @Override
+    public List<Article> getRecentArticles() {
+        Pageable pageable = (Pageable) PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "publishTime"));
+        ArrayList<Article> articles = new ArrayList<>();
+        articleDao.findAll((org.springframework.data.domain.Pageable) pageable).forEach(articles::add);
+
+        return articles;
     }
 
     @Override

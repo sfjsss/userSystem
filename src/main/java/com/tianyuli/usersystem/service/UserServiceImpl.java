@@ -11,10 +11,17 @@ import com.tianyuli.usersystem.rpcDomain.common.strategy.OperatorStrategyEnum;
 import com.tianyuli.usersystem.rpcDomain.common.utils.MD5Utils;
 import com.tianyuli.usersystem.rpcDomain.req.LoginRequest;
 import com.tianyuli.usersystem.rpcDomain.req.RegisterRequest;
+import com.tianyuli.usersystem.rpcDomain.resp.ArticleResp;
+import com.tianyuli.usersystem.rpcDomain.resp.UserCenterVOResp;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl extends BaseServiceImpl<User, String> implements UserService {
@@ -27,6 +34,12 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements Us
 
     @Autowired
     private AddressService addressService;
+
+    @Autowired
+    private UserTagService userTagService;
+
+    @Autowired
+    private ArticleService articleService;
 
     @Autowired
     private UserPreferenceService userPreferenceService;
@@ -107,5 +120,31 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements Us
     @Override
     public boolean checkPassword(User user, LoginRequest loginRequest) {
         return StringUtils.equals(user.getPassword(), MD5Utils.getMD5(loginRequest.getPassword()));
+    }
+
+    @Override
+    public RespResult getAccountCenterInfo(String userId) {
+        Optional<User> optionalUser = userDao.findById(userId);
+        if (!optionalUser.isPresent()) {
+            return new RespResult(ResultCode.USER_NOT_EXIST);
+        }
+        UserCenterVOResp userCenterVOResp = new UserCenterVOResp();
+        User user = optionalUser.get();
+        userCenterVOResp.setUsername(user.getUsername());
+        Optional<Address> optionalAddress = addressService.findById(userId);
+        Address address = optionalAddress.get();
+        String provinceAndCity = address.getProvince() == null ? "" : address.getProvince() + (address.getCity() == null ? "" : address.getCity());
+        userCenterVOResp.setProvinceAndCity(provinceAndCity);
+        userCenterVOResp.setPersonalProfile(userProfileService.findById(userId).get().getPersonalProfile());
+        userCenterVOResp.setUserTagList(userTagService.getUserTagList(userId));
+        List<Article> articleList = articleService.getRecentArticles();
+        List<ArticleResp> articleRespList = new ArrayList<>();
+        for (Article article : articleList) {
+            ArticleResp articleResp = new ArticleResp();
+            BeanUtils.copyProperties(article, articleResp);
+            articleRespList.add(articleResp);
+        }
+        userCenterVOResp.setArticleList(articleRespList);
+        return new RespResult(ResultCode.SUCCESS, userCenterVOResp);
     }
 }
