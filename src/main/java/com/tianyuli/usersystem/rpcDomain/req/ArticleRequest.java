@@ -10,6 +10,7 @@ import java.util.List;
 public class ArticleRequest implements Serializable {
     private static final long serialVersionUID = 8786604309779466266L;
 
+    private String id;
     private String title;
     private String content;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -19,6 +20,14 @@ public class ArticleRequest implements Serializable {
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {

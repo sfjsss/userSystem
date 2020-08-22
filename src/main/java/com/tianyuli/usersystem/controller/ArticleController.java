@@ -23,4 +23,25 @@ public class ArticleController {
         String userId = JwtTokenUtil.getUserIdByAuthorHead(authHeader);
         return articleService.publish(userId, articleRequest);
     }
+
+    @PostMapping(value = "update", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public RespResult update(@RequestHeader(name = JwtTokenUtil.AUTH_HEADER_KEY) String authHeader,
+                              @RequestBody ArticleRequest articleRequest) {
+        String userId = JwtTokenUtil.getUserIdByAuthorHead(authHeader);
+        return articleService.updateArticleByAuthor(userId, articleRequest);
+    }
+
+    @PostMapping(value = "delete", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public RespResult delete(@RequestBody ArticleRequest articleRequest) {
+        return articleService.deleteArticleById(articleRequest.getId());
+    }
+
+    @PostMapping(value = "show/detail", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public RespResult showDetail(@RequestBody ArticleRequest articleRequest) {
+        return articleService.showSingleArticle(articleRequest.getId());
+    }
+
 }
