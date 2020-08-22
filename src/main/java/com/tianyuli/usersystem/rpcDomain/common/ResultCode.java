@@ -19,7 +19,8 @@ public enum ResultCode implements Serializable {
     MAIL_SEND_FAIL(-2002, "mail send failed, please check if email is valid"),
     REGISTER_CAPTCHA_SEND(2001, "captcha sent"),
     PARAM_IS_BLANK(10002, "user param is blank"),
-    USER_NOT_EXIST(20004, "user does not exist");
+    USER_NOT_EXIST(20004, "user does not exist"),
+    RESULT_DATA_NONE(50001, "data not found");
 
     int code;
 

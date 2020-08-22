@@ -1,6 +1,7 @@
 package com.tianyuli.usersystem.rpcDomain.resp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.tianyuli.usersystem.pojo.ArticleTag;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -17,7 +18,7 @@ public class ArticleResp implements Serializable {
     private Date publishTime;
     private String title;
     private String content;
-    private List<String> articleTagList;
+    private List<ArticleTag> articleTagList;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -63,11 +64,11 @@ public class ArticleResp implements Serializable {
         this.content = content;
     }
 
-    public List<String> getArticleTagList() {
+    public List<ArticleTag> getArticleTagList() {
         return articleTagList;
     }
 
-    public void setArticleTagList(List<String> articleTagList) {
+    public void setArticleTagList(List<ArticleTag> articleTagList) {
         this.articleTagList = articleTagList;
     }
 }
