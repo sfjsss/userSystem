@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/account/settings")
+@CrossOrigin
 public class AccountSettingsController {
 
     @Autowired

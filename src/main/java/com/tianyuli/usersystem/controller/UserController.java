@@ -21,6 +21,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("user")
+@CrossOrigin
 public class UserController {
 
     @Autowired

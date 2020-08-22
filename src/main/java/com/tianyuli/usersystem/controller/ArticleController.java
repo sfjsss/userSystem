@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("article")
+@CrossOrigin
 public class ArticleController {
 
     @Autowired
